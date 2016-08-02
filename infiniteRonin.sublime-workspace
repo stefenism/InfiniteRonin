@@ -1,0 +1,878 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"spawning",
+				"SpawningWait"
+			],
+			[
+				"spawncombo",
+				"SpawnComboWait"
+			],
+			[
+				"trail",
+				"trail"
+			],
+			[
+				"low",
+				"Low"
+			],
+			[
+				"Get",
+				"GetComponent"
+			],
+			[
+				"start",
+				"StartPoint"
+			],
+			[
+				"Ve",
+				"Vector3"
+			],
+			[
+				"Touc",
+				"TouchPhase"
+			],
+			[
+				"star",
+				"Start"
+			],
+			[
+				"Ran",
+				"Range"
+			],
+			[
+				"Ra",
+				"Range"
+			],
+			[
+				"Moun",
+				"MountainClone"
+			],
+			[
+				"mount",
+				"MountainMarker"
+			],
+			[
+				"Mou",
+				"Mountains"
+			],
+			[
+				"moun",
+				"MountainClone"
+			],
+			[
+				"mou",
+				"MountainMarker"
+			],
+			[
+				"Set",
+				"SetActive"
+			],
+			[
+				"W",
+				"WaitForSeconds"
+			],
+			[
+				"anim",
+				"anim"
+			],
+			[
+				"canva",
+				"CanvasDisplayer"
+			],
+			[
+				"run",
+				"Running"
+			],
+			[
+				"Game",
+				"GameOn"
+			],
+			[
+				"Ru",
+				"Running"
+			],
+			[
+				"PlaySou",
+				"PlaySound"
+			],
+			[
+				"play",
+				"playSounds"
+			],
+			[
+				"thrus",
+				"ThrustParticle"
+			],
+			[
+				"part",
+				"ParticleSystem"
+			],
+			[
+				"lant",
+				"LanternClone"
+			],
+			[
+				"mark",
+				"Marker"
+			],
+			[
+				"right",
+				"RightBorder"
+			],
+			[
+				"fore",
+				"ForeGroundRocks"
+			],
+			[
+				"Fore",
+				"ForeGroundSprite"
+			],
+			[
+				"spa",
+				"SpawnCombo"
+			],
+			[
+				"parti",
+				"particleSpawn"
+			],
+			[
+				"pa",
+				"ParticleTime"
+			],
+			[
+				"par",
+				"ParticleSystem"
+			],
+			[
+				"sla",
+				"Slash"
+			],
+			[
+				"sp",
+				"SpritualLight"
+			],
+			[
+				"sw",
+				"SwordType"
+			],
+			[
+				"th",
+				"Thrust"
+			],
+			[
+				"pro",
+				"Probability"
+			],
+			[
+				"collider",
+				"colliderVertices"
+			],
+			[
+				"Mesh",
+				"MeshCollider"
+			],
+			[
+				"Ground",
+				"GroundTileMaterial"
+			],
+			[
+				"uvs",
+				"uvs"
+			],
+			[
+				"tun",
+				"tUnitH"
+			],
+			[
+				"tuni",
+				"tUnitH"
+			],
+			[
+				"tunit",
+				"tUnitW"
+			],
+			[
+				"tu",
+				"tUnitH"
+			],
+			[
+				"Star",
+				"StartCoroutine"
+			],
+			[
+				"Spawn",
+				"SpawnComboAttack"
+			],
+			[
+				"SpawnC",
+				"SpawnCombo"
+			],
+			[
+				"spawn",
+				"SpawnCombo"
+			],
+			[
+				"Sla",
+				"SlashTime"
+			],
+			[
+				"ran",
+				"RandomEnemy"
+			],
+			[
+				"spaw",
+				"SpawnCheck"
+			],
+			[
+				"Spa",
+				"SpawnWait"
+			],
+			[
+				"AddCo",
+				"AddColliderToMesh"
+			],
+			[
+				"curre",
+				"CurrentMeshPoint"
+			],
+			[
+				"Curre",
+				"CurrentMeshPoint"
+			],
+			[
+				"lef",
+				"LeftBorder"
+			],
+			[
+				"mesh",
+				"meshcollider"
+			],
+			[
+				"dist",
+				"DistZ"
+			],
+			[
+				"ve",
+				"Vector3"
+			],
+			[
+				"add",
+				"AddTerrainPoint"
+			],
+			[
+				"new",
+				"NewMeshPoint"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "GroundGenerator.cs",
+			"settings":
+			{
+				"buffer_size": 9332,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "SwipeController.cs",
+			"settings":
+			{
+				"buffer_size": 5651,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "ForeGroundGenerator.cs",
+			"settings":
+			{
+				"buffer_size": 1628,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "TestBloodSpray.cs",
+			"settings":
+			{
+				"buffer_size": 554,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "SprayBlood.cs",
+			"settings":
+			{
+				"buffer_size": 490,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "KillParticleEffect.cs",
+			"settings":
+			{
+				"buffer_size": 337,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "PlayerController.cs",
+			"settings":
+			{
+				"buffer_size": 7913,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/sketch/Downloads/Unity/Bivouac/Assets/Scripts/PlayerController.cs",
+			"settings":
+			{
+				"buffer_size": 4412,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/sketch/Downloads/Unity/1GAM_March_Commisary/1GAM_March_Commisary/Assets/Scripts/AmmoDisplay.cs",
+			"settings":
+			{
+				"buffer_size": 616,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/sketch/Downloads/Unity/1GAM_March_Commisary/1GAM_March_Commisary/Assets/Scripts/PauseMenu.cs",
+			"settings":
+			{
+				"buffer_size": 1080,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "EnemyGenerator.cs",
+			"settings":
+			{
+				"buffer_size": 2257,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "CameraFollow.cs",
+			"settings":
+			{
+				"buffer_size": 1765,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/sketch/Downloads/Unity/1GAM_March_Commisary/1GAM_March_Commisary/Assets/Scripts/PlayerHealth.cs",
+		"/home/sketch/Downloads/Unity/InfiniteRonin/InfiniteRonin/Assets/Scripts/AttackRange.cs",
+		"/home/sketch/Downloads/Unity/1GAM_March_Commisary/1GAM_March_Commisary/Assets/Scripts/PlaySounds.cs",
+		"/home/sketch/Downloads/Unity/InfiniteRonin/InfiniteRonin/Assets/Scripts/GamingTimer.cs",
+		"/home/sketch/Downloads/Unity/InfiniteRonin/InfiniteRonin/Assets/Scripts/SlashBox.cs",
+		"/home/sketch/Downloads/Unity/InfiniteRonin/InfiniteRonin/Assets/Scripts/EnemyHitDetection.cs",
+		"/home/sketch/Downloads/Unity/LD34/LudumDare34/Assets/Scripts/Jukebox.cs",
+		"/home/sketch/Downloads/Unity/InfiniteRonin/InfiniteRonin/Assets/Scripts/Destroyer.cs",
+		"/home/sketch/Downloads/Unity/InfiniteRonin/InfiniteRonin/\"/home/sketch/Downloads/Unity/InfiniteRonin/InfiniteRonin/Assets/Scripts/SwipeController.cs\"",
+		"/home/sketch/Downloads/Unity/1GAM_March_Commisary/1GAM_March_Commisary/Assets/Scripts/FanAi.cs",
+		"/home/sketch/Downloads/Unity/1GAM_March_Commisary/1GAM_March_Commisary/Assets/Scripts/DisplayFood.cs",
+		"/home/sketch/Downloads/Unity/1GAM_March_Commisary/1GAM_March_Commisary/Assets/Scripts/InventoryDisplay.cs",
+		"/home/sketch/Downloads/Unity/1GAM_March_Commisary/1GAM_March_Commisary/Assets/Scripts/ThrowFood.cs",
+		"/home/sketch/Downloads/Unity/InfiniteRonin/InfiniteRonin/Assets/Scripts/PlaySounds.cs",
+		"/home/sketch/Downloads/Unity/1GAM_March_Commisary/1GAM_March_Commisary/Assets/Scripts/GamingTimer.cs",
+		"/home/sketch/Downloads/Unity/InfiniteRonin/InfiniteRonin/Assets/Scripts/GamingTimer.cs.meta",
+		"/home/sketch/Downloads/Unity/1GAM_March_Commisary/1GAM_March_Commisary/Assets/Scripts/ShopMenu.cs",
+		"/home/sketch/Downloads/Unity/1GAM_March_Commisary/1GAM_March_Commisary/Assets/Scripts/Seat.cs",
+		"/home/sketch/Downloads/Unity/InfiniteRonin/InfiniteRonin/\"\"",
+		"/home/sketch/Downloads/Unity/LD34/LudumDare34/Assets/Scripts/HogGoomba.cs",
+		"/home/sketch/Downloads/Unity/LD34/LudumDare34/Assets/Scripts/CameraFollow.cs",
+		"/home/sketch/Downloads/Unity/LD34/LudumDare34/Assets/Scripts/PlayerController.cs",
+		"/usr/share/applications/sublime.desktop",
+		"/home/sketch/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"currentmeshpoint",
+			"height",
+			"trails",
+			"thrust",
+			"linego",
+			"keycode",
+			"keycode.x",
+			"color",
+			"scale",
+			"ypoint",
+			"currentmeshpoint",
+			"play",
+			"foreground",
+			"marker",
+			"new game",
+			"spawnpoint",
+			"print",
+			"update",
+			"vertices",
+			"uvs",
+			"vertices",
+			"material",
+			"landgroup",
+			"setparent",
+			"color",
+			"marker",
+			"startcoroutine",
+			"timer",
+			"currentpoint",
+			"y",
+			"vertices",
+			"15f",
+			"rightborder",
+			"clear",
+			"points",
+			"filter.me",
+			"line"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "GroundGenerator.cs",
+					"settings":
+					{
+						"buffer_size": 9332,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4743,
+								4743
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 546.0,
+						"translation.y": 2994.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "SwipeController.cs",
+					"settings":
+					{
+						"buffer_size": 5651,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 90.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "ForeGroundGenerator.cs",
+					"settings":
+					{
+						"buffer_size": 1628,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1485,
+								1485
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 663.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "TestBloodSpray.cs",
+					"settings":
+					{
+						"buffer_size": 554,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								551,
+								551
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "SprayBlood.cs",
+					"settings":
+					{
+						"buffer_size": 490,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								484,
+								484
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "KillParticleEffect.cs",
+					"settings":
+					{
+						"buffer_size": 337,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								210,
+								210
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "PlayerController.cs",
+					"settings":
+					{
+						"buffer_size": 7913,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4995,
+								4995
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 26.0,
+						"translation.y": 2875.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/home/sketch/Downloads/Unity/Bivouac/Assets/Scripts/PlayerController.cs",
+					"settings":
+					{
+						"buffer_size": 4412,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								487,
+								487
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2601.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/home/sketch/Downloads/Unity/1GAM_March_Commisary/1GAM_March_Commisary/Assets/Scripts/AmmoDisplay.cs",
+					"settings":
+					{
+						"buffer_size": 616,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								45,
+								45
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/home/sketch/Downloads/Unity/1GAM_March_Commisary/1GAM_March_Commisary/Assets/Scripts/PauseMenu.cs",
+					"settings":
+					{
+						"buffer_size": 1080,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "EnemyGenerator.cs",
+					"settings":
+					{
+						"buffer_size": 2257,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 2.0,
+						"translation.y": 1326.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "CameraFollow.cs",
+					"settings":
+					{
+						"buffer_size": 1765,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								462,
+								462
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C#/C#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}
