@@ -107,8 +107,9 @@ public class SwipeController : MonoBehaviour {
 					Vector3 position = Camera.main.ScreenToWorldPoint(touch.position);
 
 					//then do something at the desired point
-					playerController.Tapped = true;
-					playerController.JumpBool = true;
+					//playerController.Tapped = true;
+					//playerController.JumpBool = true;
+					playerController.StartTap = true;
 				}
 
 				else
@@ -258,6 +259,7 @@ public class SwipeController : MonoBehaviour {
 			playerController.Low = false;
 		}
 	}
+
 
 	//<summary>
 	//Create a new trail at the given position

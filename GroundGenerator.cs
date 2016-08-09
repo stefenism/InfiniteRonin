@@ -462,7 +462,7 @@ public class GroundGenerator : MonoBehaviour {
 
 		else if(bridgeGap)
 		{
-			newPatternPoint = new Vector3(CurrentMeshPoint.x + xWavelength * xSmoothing  + Random.Range(4f,8f) , CurrentMeshPoint.y + Random.Range(-1f,1f), 0f);
+			newPatternPoint = new Vector3(CurrentMeshPoint.x + xWavelength * xSmoothing  + Random.Range(4f,8f) , CurrentMeshPoint.y, 0f);
 			for(int i = 0; i < Random.Range(6,8); i++)
 			{
 				points.Add(new Vector3(newPatternPoint.x, newPatternPoint.y + 100f, 0f));

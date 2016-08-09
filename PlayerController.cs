@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour {
 	[HideInInspector]
 	public bool Tapped;
 	[HideInInspector]
+	public bool StartTap;
+	[HideInInspector]
 	public bool Low;
 	[HideInInspector]
 	public bool Thrustbool;
@@ -37,6 +39,7 @@ public class PlayerController : MonoBehaviour {
 
 	public float speed;
 	public float JumpForce;
+	public float jumpTime;
 	public BoxCollider slashBox;
 	public BoxCollider sliceBox;
 	public BoxCollider thrustBox;
@@ -72,6 +75,9 @@ public class PlayerController : MonoBehaviour {
 	public LayerMask WhatIsGround;
 	public bool Grounded;
 
+	private float previousPos;
+	private bool isMoving;
+
 
 
 	// Use this for initialization
@@ -89,6 +95,7 @@ public class PlayerController : MonoBehaviour {
 		CanControl = false;
 		CanTap = true;
 		IsDead = true;
+		isMoving = false;
 
 		Grounded = false;
 		/*  These are the Variables to reset once you have touch working note on: 6/21/16 */
@@ -107,6 +114,10 @@ public class PlayerController : MonoBehaviour {
 		distance = 0;
 
 		anim.SetBool("dead", true);
+
+
+		previousPos = transform.position.x;
+
 
 
 
@@ -141,7 +152,12 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		CanvasDisplayer();
-		UpdateDistance();
+		CheckMovement();
+
+		if(isMoving)
+		{
+			UpdateDistance();
+		}
 
 		anim.SetFloat("Yspeed", rb.velocity.y);
 
@@ -251,7 +267,7 @@ public class PlayerController : MonoBehaviour {
 			localSlashObj.transform.parent = transform;
 			localSlashObj.Play();
 
-			StartCoroutine(SlashTime(.25f));
+			StartCoroutine(SlashTime(.3f));
 			StartCoroutine(AnimTime(.001f));
 			StartCoroutine(ParticleTime(.2f,localSlashObj));
 
@@ -275,15 +291,25 @@ public class PlayerController : MonoBehaviour {
 
 	void Jump()
 	{
-
+		jumpTime = .6f;
 
 		if(JumpBool && Grounded)
 		{
 			if((!IsDead && Tapped))
 			{
-				rb.velocity = new Vector3(rb.velocity.x, JumpForce, 0f);
-				JumpBool = false;
-				Grounded = false;
+
+				if(jumpTime > 0f)
+				{
+					rb.AddForce (transform.up * JumpForce, ForceMode.VelocityChange);
+					print("jumptime " + jumpTime);
+					jumpTime -= .2f;
+				}
+				//rb.velocity = new Vector3(rb.velocity.x, JumpForce, 0f);
+				else
+				{
+					JumpBool = false;
+					Grounded = false;
+				}
 				anim.SetBool("jumping", true);
 
 			}
@@ -305,7 +331,7 @@ public class PlayerController : MonoBehaviour {
 	{
 		if(CanvasDisplay && IsDead)
 		{
-			if((Input.GetKeyDown(KeyCode.X) || Tapped) && CanTap)
+			if((Input.GetKeyDown(KeyCode.X) || StartTap) && CanTap)
 			{
 				anim.SetBool("dead", false);
 				anim.SetBool("alive", true);
@@ -319,7 +345,7 @@ public class PlayerController : MonoBehaviour {
 				ClearScreenBox.enabled = true;
 				StartCoroutine(ReviveWait(1f));
 
-				Tapped = false;
+				StartTap = false;
 
 			}
 
@@ -329,6 +355,31 @@ public class PlayerController : MonoBehaviour {
 	void UpdateDistance()
 	{
 		distance += ((rb.velocity.x / speed) / 3);
+	}
+
+	void CheckMovement()
+	{
+		if((int)previousPos < (int)transform.position.x)
+		{
+			isMoving = true;
+		}
+		else if((int)previousPos == (int)transform.position.x)
+		{
+			isMoving = false;
+		}
+		previousPos = transform.position.x;
+	}
+
+	public void JumpButton()
+	{
+		Tapped = true;
+		JumpBool = true;
+	}
+
+	public void UnJumpButton()
+	{
+		Tapped = false;
+		JumpBool = false;
 	}
 
 
