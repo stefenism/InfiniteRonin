@@ -65,6 +65,7 @@ public class GroundGenerator : MonoBehaviour {
 
 	public float xSmoothing = .25f;
 	public float xWavelength = 8f;
+	public float flatLength = 50f;
 
 	public float ySmoothing = .25f;
 	public float yWaveLength = 2f;
@@ -172,18 +173,16 @@ public class GroundGenerator : MonoBehaviour {
 
 		vertices.Clear();
 		triangles.Clear();
+		uvs.Clear();
 
 		CreatePoints();
 		//this may not go here...must test
 
 		CreateMesh();
 
-
-		//CreateMesh();
-
 		mesh.vertices = vertices.ToArray();
 		mesh.triangles = triangles.ToArray();
-		//mesh.uv = uvs.ToArray();
+		mesh.uv = uvs.ToArray();
 
 		mesh.RecalculateNormals();
 		mesh.RecalculateBounds();
@@ -211,9 +210,9 @@ public class GroundGenerator : MonoBehaviour {
 			//AddTerrainPoint(points[i]);
 
 			Marker = new Vector3(this.CurrentMeshPoint.x, this.CurrentMeshPoint.y, this.CurrentMeshPoint.z);
-			enemyGenerator.SpawnPoint = new Vector3(Marker.x -10f, Marker.y + 10f, Marker.z);
+			enemyGenerator.SpawnPoint = new Vector3(Marker.x -30f, Marker.y + 15f, Marker.z);
 			platformGenerator.SpawnPoint = new Vector3(Marker.x + 10f, Marker.y + 20f, Marker.z);
-			foreGroundGenerator.yPoint = Marker.y - 1.5f;
+			foreGroundGenerator.yPoint = Marker.y - 3f;
 			if(this.transform.root.name == "PhysicalGroundGenerator")
 			{
 				player.PhysicalLandGroupHeight = Marker;
@@ -295,7 +294,7 @@ public class GroundGenerator : MonoBehaviour {
 	public void AddTerrainPoint(Vector3 point)
 	{
 		//Create Corresponding point along the bottom
-		vertices.Add(new Vector3(point.x, -25f,0f));
+		vertices.Add(new Vector3(point.x, -50f,0f));
 		//then add our top point
 		vertices.Add(point);
 		if (vertices.Count >=4)
@@ -310,11 +309,21 @@ public class GroundGenerator : MonoBehaviour {
 			triangles.Add(start + 2);
 		}
 
+		//Debug.Log("vertices.length " + vertices.Count);
+
+
+		uvs.Add(new Vector2( 0f,0f));
+		uvs.Add(new Vector2( 1f,1f));
+
+		//Debug.Log("uvs.length " + uvs.Count);
+
+		/*
 		Vector2 uvsIndex = new Vector2(Random.Range(0,2), Random.Range(0,1));
 		uvs.Add(new Vector2 (tUnitW * uvsIndex.x, tUnitH * uvsIndex.y + 1f));
 		uvs.Add(new Vector2 (tUnitW * uvsIndex.x + 1f, tUnitH * uvsIndex.y + 1f));
 		uvs.Add(new Vector2 (tUnitW * uvsIndex.x + 1f, tUnitH * uvsIndex.y));
 		uvs.Add(new Vector2 (tUnitW * uvsIndex.x, tUnitH * uvsIndex.y));
+		*/
 
 		GenerateCollider(point.x,point.y);
 	}
@@ -402,10 +411,11 @@ public class GroundGenerator : MonoBehaviour {
 		}
 		else if(JumpRamp)
 		{
-			if(pointPatternLength < 6)
+			if(pointPatternLength < 5f)
 			{
 				newPatternPoint = new Vector3(CurrentMeshPoint.x + xWavelength * xSmoothing, CurrentMeshPoint.y + 1.75f, 0f);
 				pointPatternLength += 1;
+				foreGroundGenerator.yPoint = Marker.y - 8f;
 			}
 			else
 			{
@@ -413,16 +423,20 @@ public class GroundGenerator : MonoBehaviour {
 				JumpRamp = false;
 				pointPatternLength = 0;
 				Timer = PatternChangeWait;
+
+				//maybe this is necessary to keep
+				foreGroundGenerator.yPoint = Marker.y - 5f;
 			}
 		}
 		else if(Flat)
 		{
-			if(pointPatternLength < 25f)
+			if(pointPatternLength < 40f)
 			{
 				newPatternPoint = new Vector3(CurrentMeshPoint.x + xWavelength * xSmoothing, CurrentMeshPoint.y, 0f);
 				pointPatternLength += 1;
-				platformGenerator.SpawnPoint = new Vector3(newPatternPoint.x + 40f, newPatternPoint.y + 20f, 0f);
-				if(pointPatternLength == 1)
+				platformGenerator.SpawnPoint = new Vector3(newPatternPoint.x + 30f, newPatternPoint.y + 20f, 0f);
+				Debug.Log("point pattern length " + pointPatternLength);
+				if(pointPatternLength == 1f)
 				{
 					platformGenerator.dojoSpawn = true;
 					platformGenerator.SpawnDojo();
@@ -439,11 +453,15 @@ public class GroundGenerator : MonoBehaviour {
 		}
 		else if(towerFlat)
 		{
-			if(pointPatternLength < 5f)
+			//pointPatternLength decides how long the variable in the "if" statement
+			//is true.  In This case we want the towerflat to last a while in case
+			//there are multiple towers so we set pointPatternLength to a higher number
+			if(pointPatternLength < 25f)
 			{
 				newPatternPoint = new Vector3(CurrentMeshPoint.x + xWavelength * xSmoothing, CurrentMeshPoint.y, 0f);
+
 				pointPatternLength += 1;
-				platformGenerator.SpawnPoint = new Vector3(newPatternPoint.x + 10f, newPatternPoint.y + 20f, 0f);
+				platformGenerator.SpawnPoint = new Vector3(newPatternPoint.x, newPatternPoint.y + 17f, 0f);
 				if(pointPatternLength == 1)
 				{
 
@@ -462,11 +480,14 @@ public class GroundGenerator : MonoBehaviour {
 
 		else if(bridgeGap)
 		{
-			newPatternPoint = new Vector3(CurrentMeshPoint.x + xWavelength * xSmoothing  + Random.Range(4f,8f) , CurrentMeshPoint.y, 0f);
+			newPatternPoint = new Vector3(CurrentMeshPoint.x + xWavelength * xSmoothing  + Random.Range(4f,6f) , CurrentMeshPoint.y, 0f);
 			for(int i = 0; i < Random.Range(6,8); i++)
 			{
 				points.Add(new Vector3(newPatternPoint.x, newPatternPoint.y + 100f, 0f));
 			}
+
+				//points.Add(new Vector3(newPatternPoint.x + flatLength, newPatternPoint.y, 0f));
+			newPatternPoint = new Vector3(newPatternPoint.x, newPatternPoint.y, 0f);
 
 			platformGenerator.SpawnPoint = new Vector3(newPatternPoint.x + 17f, newPatternPoint.y + 20f, 0f);
 
@@ -493,18 +514,18 @@ public class GroundGenerator : MonoBehaviour {
 		if(Timer <= 0f)
 		{
 			int patternProbability = Random.Range(0,100);
-			if(patternProbability >= 0 && patternProbability < 20)
+			if(patternProbability >= 0 && patternProbability < 10)
 			{
 				JumpRamp = true;
 				Timer = PatternChanging;
 			}
-			else if(patternProbability >= 20 && patternProbability < 40)
+			else if(patternProbability >= 10 && patternProbability < 20)
 			{
 				Gap = true;
 				enemyGenerator.GameOn = false;
 				Timer = PatternChanging;
 			}
-			else if(patternProbability >= 40 && patternProbability < 60)
+			else if(patternProbability >= 20 && patternProbability < 70)
 			{
 
 				int probs = Random.Range(0,100);
@@ -521,7 +542,7 @@ public class GroundGenerator : MonoBehaviour {
 				}
 
 			}
-			else if(patternProbability >= 60 && patternProbability < 80)
+			else if(patternProbability >= 70 && patternProbability < 90)
 			{
 				bridgeGap = true;
 				Timer = PatternChanging;

@@ -18,6 +18,7 @@ public class EnemyHitDetection : MonoBehaviour {
 
 	private bool Dying;
 	private BoxCollider boxCollider;
+	private SphereCollider sphereCollider;
 	private Rigidbody rigidbody;
 	public AttackRange attackRange;
 	public SillhouetteShader sillhouetteShader;
@@ -31,6 +32,7 @@ public class EnemyHitDetection : MonoBehaviour {
 		playSounds = GetComponent<PlaySounds>();
 		audioSource = GetComponent<AudioSource>();
 		boxCollider = GetComponent<BoxCollider>();
+		sphereCollider = GetComponent<SphereCollider>();
 		rigidbody = GetComponent<Rigidbody>();
 		//attackRange = GetComponent<AttackRange>();
 
@@ -60,7 +62,10 @@ public class EnemyHitDetection : MonoBehaviour {
 
 	void OnTriggerEnter(Collider collider)
 	{
-		if(collider.gameObject.tag == SwordType || collider.gameObject.tag == "ClearScreen")
+
+
+		//if(collider.gameObject.tag == SwordType || collider.gameObject.tag == "ClearScreen")
+		if(collider.gameObject.tag == "Sword" || collider.gameObject.tag == "ClearScreen")
 		{
 
 			playSounds.PlaySound(0);
@@ -69,6 +74,7 @@ public class EnemyHitDetection : MonoBehaviour {
 			print("kills: " + player.kills);
 			Dying = true;
 			boxCollider.enabled = false;
+			sphereCollider.enabled = false;
 			rigidbody.isKinematic = true;
 			attackRange.AttackRangeCollider.enabled = false;
 			anim.SetBool("dead",true);
@@ -80,6 +86,7 @@ public class EnemyHitDetection : MonoBehaviour {
 		{
 			Dying = true;
 			boxCollider.enabled = false;
+			sphereCollider.enabled = false;
 			rigidbody.isKinematic = true;
 			attackRange.AttackRangeCollider.enabled = false;
 			anim.SetBool("dead", true);
@@ -96,7 +103,7 @@ public class EnemyHitDetection : MonoBehaviour {
 
 	void OnTriggerExit(Collider collision)
 	{
-		if(GetComponent<Collider>().gameObject.tag == "Dojo")
+		if(collision.gameObject.tag == "Dojo")
 		{
 			sillhouetteShader.inDojo = false;
 		}

@@ -16,7 +16,8 @@ public class PlayerController : MonoBehaviour {
 	private bool Jumping;
 	private bool CanvasDisplay;
 	private bool CanControl;
-	private bool IsDead;
+	[HideInInspector]
+	public bool IsDead;
 
 	private bool CanTap;
 
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour {
 	public BoxCollider thrustBox;
 	public BoxCollider ClearScreenBox;
 	public BoxCollider DownThrustBox;
+	public BoxCollider UpThrustBox;
 
 	public GameObject PhysicalLandGroup;
 	public GameObject SpiritualLandGroup;
@@ -123,6 +125,8 @@ public class PlayerController : MonoBehaviour {
 
 	}
 
+
+
 	// Update is called once per frame
 	void Update () {
 
@@ -147,6 +151,7 @@ public class PlayerController : MonoBehaviour {
 				Thrust();
 				Jump();
 				DownThrust();
+				UpThrust();
 			}
 
 		}
@@ -181,7 +186,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Slash()
 	{
-		if(Input.GetKeyDown(KeyCode.W) || High)
+		if(Grounded && (Input.GetKeyDown(KeyCode.W) || High))
 		{
 			slashBox.enabled = true;
 			anim.SetBool("slashing", true);
@@ -275,6 +280,36 @@ public class PlayerController : MonoBehaviour {
 
 			Low = false;
 		}
+
+		if(Grounded)
+		{
+			DownThrustBox.enabled = false;
+		}
+	}
+
+	void UpThrust()
+	{
+		if(!Grounded && (Input.GetKeyDown(KeyCode.W) || High))
+		{
+			UpThrustBox.enabled = true;
+			//anim.SetBool("upThrust", true);
+			anim.SetBool("slashing", true);
+
+			SlashUp(30f);
+
+			Vector3 position = particleSpawn.transform.position - new Vector3(2.5f, 3f, 0f);
+			ParticleSystem localSlashObj = GameObject.Instantiate(LowSlashParticle, position, LowSlashParticle.transform.rotation) as ParticleSystem;
+			localSlashObj.transform.parent = transform;
+			localSlashObj.Play();
+
+			StartCoroutine(SlashTime(.3f));
+			StartCoroutine(AnimTime(.001f));
+			StartCoroutine(ParticleTime(.2f,localSlashObj));
+
+			playSounds.PlaySound(2);
+
+			High = false;
+		}
 	}
 
 	void SlashForward(float distance)
@@ -287,6 +322,11 @@ public class PlayerController : MonoBehaviour {
 	{
 		//rb.transform.position = new Vector3(rb.transform.position.x, rb.transform.position.y  - distance, 0f);
 		rb.AddForce(Vector3.down * speed, ForceMode.VelocityChange);
+	}
+
+	void SlashUp(float speed)
+	{
+		rb.AddForce(Vector3.up * speed, ForceMode.VelocityChange);
 	}
 
 	void Jump()
@@ -318,6 +358,7 @@ public class PlayerController : MonoBehaviour {
 
 		else if(Grounded)
 		{
+
 			if(!IsDead && Input.GetKeyDown(KeyCode.Space))
 			{
 				rb.velocity = new Vector3(rb.velocity.x, JumpForce, 0f);
@@ -392,7 +433,8 @@ public class PlayerController : MonoBehaviour {
     	thrustBox.enabled = false;
     	sliceBox.enabled = false;
     	Attacking = false;
-			DownThrustBox.enabled = false;
+			//DownThrustBox.enabled = false;
+			UpThrustBox.enabled = false;
     	//anim.SetBool("slashing", false);
     }
     private IEnumerator AnimTime(float Time)
@@ -418,6 +460,7 @@ public class PlayerController : MonoBehaviour {
     	Running = true;
 			Jumping = true;
 		enemyGenerator.GameOn = true;
+		enemyGenerator.lastSpawnDistance = 0f;
 		platformGenerator.GameOn = true;
 		anim.SetFloat("speed", 1f);
 		ClearScreenBox.enabled = false;
@@ -446,7 +489,7 @@ public class PlayerController : MonoBehaviour {
     void OnCollisionEnter(Collision collision)
     {
 
-			print(collision.gameObject.tag + " currentcollision");
+			//print(collision.gameObject.tag + " currentcollision");
     	if(collision.gameObject.tag == "Enemy")
     	{
     		/*Running = false;
@@ -458,6 +501,12 @@ public class PlayerController : MonoBehaviour {
 				*/
 				StartCoroutine(DeadWait(3f));
     	}
+
+			if(collision.gameObject.tag == "enemyWeapon")
+			{
+				StartCoroutine(DeadWait(3f));
+			}
+
 		}
 
 			void OnTriggerEnter(Collider collision)
@@ -472,6 +521,8 @@ public class PlayerController : MonoBehaviour {
 					StartCoroutine(DeadWait(2f));
 					rb.transform.position = new Vector3(rb.transform.position.x + 5f, rb.transform.position.y + 25f, 0f);
 				}
+
+
 			}
 
 			void OnTriggerExit(Collider collision)

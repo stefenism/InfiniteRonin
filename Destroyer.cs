@@ -26,7 +26,7 @@ public class Destroyer : MonoBehaviour {
 	{
 		if(collider.gameObject.tag != null)
 		{
-			print(collider.gameObject.tag + " last destroyed");
+			//print(collider.gameObject.tag + " last destroyed");
 			Destroy(collider.gameObject);
 		}
 		/*else if(collider.gameObject.tag == "Enemy")

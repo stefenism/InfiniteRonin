@@ -16,6 +16,7 @@ public class PlatformGenerator : MonoBehaviour {
 	private float SpawningWait;
 
 	private bool Spawning;
+	private bool spawnCombo;
 
 	public bool GameOn;
 
@@ -36,6 +37,7 @@ public class PlatformGenerator : MonoBehaviour {
 
 
 			GameOn = false;
+			spawnCombo = false;
 
 			Timer = Random.Range(1,10);
 
@@ -100,6 +102,26 @@ public class PlatformGenerator : MonoBehaviour {
 
 		}
 
+		void SpawnCombo(GameObject platform)
+		{
+
+			if(spawnCombo)
+			{
+				for(int i = 0; i < Random.Range(1,4); i++)
+				{
+					if(i > 0)
+					{
+						SpawnPoint = new Vector3(SpawnPoint.x + 20f, SpawnPoint.y + 35f, SpawnPoint.z);
+					}
+
+					Spawn(platform);
+				}
+				spawnCombo = false;
+				Spawning = false;
+				//Timer = SpawnWait;
+			}
+		}
+
 		public void SpawnDojo()
 		{
 			Spawn(Platforms[0]);
@@ -110,7 +132,9 @@ public class PlatformGenerator : MonoBehaviour {
 
 		public void SpawnTower()
 		{
-			Spawn(Platforms[1]);
+			//Spawn(Platforms[1]);
+			spawnCombo = true;
+			SpawnCombo(Platforms[1]);
 			Timer = SpawnWait;
 			towerSpawn = false;
 		}

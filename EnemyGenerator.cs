@@ -26,7 +26,8 @@ public class EnemyGenerator : MonoBehaviour {
 
 	public PlayerController player;
 
-	private float lastSpawnDistance;
+	[HideInInspector]
+	public float lastSpawnDistance;
 	public float nextSpawn;
 
 	// Use this for initialization
@@ -66,11 +67,11 @@ public class EnemyGenerator : MonoBehaviour {
 
 		if(player.distance > lastSpawnDistance + nextSpawn)
 		{
-			if(Probability >= 0 && Probability < 30)
+			if(Probability >= 0 && Probability < 15)
 			{
 				lastSpawnDistance = player.distance;
 			}
-			else if(Probability >= 30 && Probability <= 100)
+			else if(Probability >= 15 && Probability <= 100)
 			{
 				if(Probability >= 30 && Probability < 50f)
 				{
@@ -118,7 +119,7 @@ public class EnemyGenerator : MonoBehaviour {
 			{
 				if(i > 0)
 				{
-					SpawnPoint = new Vector3(SpawnPoint.x + 6f, SpawnPoint.y, SpawnPoint.z);
+					SpawnPoint = new Vector3(SpawnPoint.x + 18f, SpawnPoint.y, SpawnPoint.z);
 				}
 
 				Spawn();

@@ -30,14 +30,26 @@ public class ArcherBehaviour : MonoBehaviour {
 	private float shootAngle;
 
 	private bool withinRange;
+	private bool shortRange;
 	private bool facingRight;
+	private bool canShoot;
+
+	private Rigidbody rigidbody;
+	private SprayBlood sprayBlood;
+	private BoxCollider boxCollider;
 
 	// Use this for initialization
 	void Start () {
 		withinRange = false;
+		shortRange = false;
 		facingRight = false;
+		canShoot = true;
 
 		player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+
+		sprayBlood = GetComponent<SprayBlood>();
+		boxCollider = GetComponent<BoxCollider>();
+		rigidbody = GetComponent<Rigidbody>();
 	}
 
 	// Update is called once per frame
@@ -45,9 +57,12 @@ public class ArcherBehaviour : MonoBehaviour {
 
 		TargetDetect();
 
-		if(withinRange)
+		if((withinRange || shortRange) && canShoot)
 		{
-			FireAtWill();
+			if(!player.IsDead){
+				FireAtWill();
+			}
+
 		}
 
 		LookAtPlayer();
@@ -105,6 +120,7 @@ public class ArcherBehaviour : MonoBehaviour {
 		{
 			Debug.Log("No Solution, sqrt = " + sqrt);
 			withinRange = false;
+			shortRange = true;
 			return 0;
 		}
 
@@ -112,6 +128,7 @@ public class ArcherBehaviour : MonoBehaviour {
 		float calculatedAngle = Mathf.Atan2((v*v) + sqrt, g*x);
 
 		withinRange = true;
+		shortRange = false;
 		return (calculatedAngle * Mathf.Rad2Deg);
 
 	}
@@ -126,7 +143,15 @@ public class ArcherBehaviour : MonoBehaviour {
 			clone = Instantiate(arrow, spawnPoint.transform.position, Quaternion.identity) as GameObject;
 			cloneRB = clone.gameObject.GetComponent<Rigidbody>();
 
-			cloneRB.AddForce((BallisticVel(player.transform, 45f)), ForceMode.VelocityChange);
+			if(withinRange)
+			{
+				cloneRB.AddForce((BallisticVel(player.transform, 45f)), ForceMode.VelocityChange);
+			}
+			else if(shortRange)
+			{
+				cloneRB.AddForce((player.transform.position - spawnPoint.transform.position) * fireSpeed, ForceMode.VelocityChange);
+			}
+			//cloneRB.AddForce((BallisticVel(player.transform, 45f)), ForceMode.VelocityChange);
 			//cloneRB.AddForce(-transform.right * transform.localScale.x * fireSpeed, ForceMode.VelocityChange);
 			cloneRB.rotation = Quaternion.LookRotation(new Vector3 (0f,0f,shootAngle));
 			//reset fireRate;
@@ -140,12 +165,15 @@ public class ArcherBehaviour : MonoBehaviour {
 
 	Vector3 BallisticVel(Transform target, float angle)
 	{
+
 		Vector3 dir = target.position - spawnPoint.transform.position; //get target position
 		float height = dir.y; //get height difference
 		dir.y = 0;
 		float dist = dir.magnitude; //get horizontal distance
 		float angleRad = angle * Mathf.Deg2Rad;  //convert angle to radians
-		dir = new Vector3 (dir.x, dist * Mathf.Tan(angleRad), 0f); //set dir to elevation angle
+
+		dir = new Vector3 (dir.x, dist * Mathf.Tan(angleRad), 0f);
+		 //set dir to elevation angle
 		dist += height/Mathf.Tan(angleRad);
 
 
@@ -153,7 +181,21 @@ public class ArcherBehaviour : MonoBehaviour {
 		//dist += height / Mathf.Tan(angle); //correct for small height differences
 
 		//calculate the velocity magnitude
-		float vel = Mathf.Sqrt(dist * Physics.gravity.magnitude / Mathf.Sin(2 * angleRad));
+		if(dist < 1)
+		{
+			dist = 1;
+		}
+		float sqrt = (dist * Physics.gravity.magnitude) / Mathf.Sin(2 * angleRad);
+
+		if(sqrt < 0)
+		{
+			sqrt = 1;
+		}
+
+		float vel = Mathf.Sqrt(sqrt);
+
+		//float vel = Mathf.Sqrt(dist * Physics.gravity.magnitude / Mathf.Sin(2 * angleRad));
+		vel += Random.Range(-5,5);
 		print("velocity " + vel);
 		//print("arrow velocity " + vel + " arrow direction " + (vel * dir.normalized) + " direction " + dir.normalized);
 
@@ -174,5 +216,18 @@ public class ArcherBehaviour : MonoBehaviour {
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
+	}
+
+	void OnTriggerEnter(Collider collision)
+	{
+		if(collision.gameObject.tag == "Sword")
+		{
+			player.kills += 1;
+			print("kills: " + player.kills);
+			boxCollider.enabled = false;
+			rigidbody.isKinematic = true;
+			sprayBlood.FireBloodParticles();
+			canShoot = false;
+		}
 	}
 }
