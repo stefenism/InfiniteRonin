@@ -39,6 +39,7 @@ public class GroundDetect : MonoBehaviour {
 				if(hit.collider.tag == "Ground")
 				{
 					player.Grounded = true;
+					player.airJump = 2;
 					player.anim.SetBool("jumping", false);
 				}
 			}

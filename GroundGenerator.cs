@@ -90,6 +90,12 @@ public class GroundGenerator : MonoBehaviour {
 
 		gameCamera = Camera.main;
 
+
+		/*
+		ForeGroundGenerator will have to generate on the second pass using the
+		height of the bottom lane to determine spawn points
+		*/
+
 		foreGroundGenerator = GetComponent<ForeGroundGenerator>();
 
 
@@ -122,6 +128,11 @@ public class GroundGenerator : MonoBehaviour {
 	// Update is called once per frame
 	void LateUpdate () {
 
+		/*
+		ChangeBorders() will become obsolete as it's only necessary to change the
+		borders to generate for an infinite runner, not a level GroundGenerator
+		*/
+
 		ChangeBorders();
 
 		/*
@@ -133,6 +144,11 @@ public class GroundGenerator : MonoBehaviour {
 		print(StartingX + " StartingX");
 		*/
 		//print(RightBorder.x + 20f + " RightBorder.x");
+
+		/*
+		This bit of code will be changed to only generate points until
+		the "x" coordinate has reached a certain distance from the starting points
+		*/
 
 		if(points[points.Count -1].x < (RightBorder.x + 100f))
 		{
@@ -385,6 +401,13 @@ public class GroundGenerator : MonoBehaviour {
 		colliderCount++;
 	}
 
+	/*
+	This whole pointsGenerator is the deciding factor on when platforms are
+	spawned.  As such it will have to be sort of re-written to accomodate the new
+	platform "spawn point" gameobjects.  Shouldn't be too difficult but It will
+	take some re-tooling
+	*/
+
 	Vector3 PointsGenerator()
 	{
 		Vector3 newPatternPoint = NewMeshPoint;
@@ -409,6 +432,12 @@ public class GroundGenerator : MonoBehaviour {
 
 			StartCoroutine(Waiting(5f));
 		}
+
+		/*
+		I think I'm going to take out the JumpRamp as it doesn't really serve
+		a purpose
+		*/
+
 		else if(JumpRamp)
 		{
 			if(pointPatternLength < 5f)
@@ -434,7 +463,7 @@ public class GroundGenerator : MonoBehaviour {
 			{
 				newPatternPoint = new Vector3(CurrentMeshPoint.x + xWavelength * xSmoothing, CurrentMeshPoint.y, 0f);
 				pointPatternLength += 1;
-				platformGenerator.SpawnPoint = new Vector3(newPatternPoint.x + 30f, newPatternPoint.y + 20f, 0f);
+				platformGenerator.SpawnPoint = new Vector3(newPatternPoint.x + 40f, newPatternPoint.y + 20f, 0f);
 				Debug.Log("point pattern length " + pointPatternLength);
 				if(pointPatternLength == 1f)
 				{
@@ -507,6 +536,12 @@ public class GroundGenerator : MonoBehaviour {
 		return newPatternPoint;
 	}
 
+
+	/*
+	This whole PatternCounter() function will have to be let go.  It doesn't have
+	a place in our new level generator utopia
+	*/
+	
 	void PatternCounter()
 	{
 

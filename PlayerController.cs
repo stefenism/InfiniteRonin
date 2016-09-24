@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour {
 	private bool CanControl;
 	[HideInInspector]
 	public bool IsDead;
+	public bool invincible;
 
 	private bool CanTap;
 
@@ -41,6 +42,8 @@ public class PlayerController : MonoBehaviour {
 	public float speed;
 	public float JumpForce;
 	public float jumpTime;
+	[HideInInspector]
+	public float airJump;
 	public BoxCollider slashBox;
 	public BoxCollider sliceBox;
 	public BoxCollider thrustBox;
@@ -69,6 +72,8 @@ public class PlayerController : MonoBehaviour {
 	public EnemyGenerator enemyGenerator;
 	public PlatformGenerator platformGenerator;
 	public SillhouetteShader sillhouetteShader;
+	public PlayerHealth playerHealth;
+	private SpriteRenderer renderer;
 
 	public Text KillCount;
 
@@ -88,6 +93,8 @@ public class PlayerController : MonoBehaviour {
 		rb = GetComponent<Rigidbody>();
 		anim = GetComponent<Animator>();
 		playSounds = GetComponent<PlaySounds>();
+		playerHealth = GetComponent<PlayerHealth>();
+		renderer = GetComponent<SpriteRenderer>();
 
 		/*  These are the Variables to reset once you have touch working note on: 6/21/16 */
 		Attacking = false;
@@ -98,6 +105,7 @@ public class PlayerController : MonoBehaviour {
 		CanTap = true;
 		IsDead = true;
 		isMoving = false;
+		invincible = false;
 
 		Grounded = false;
 		/*  These are the Variables to reset once you have touch working note on: 6/21/16 */
@@ -295,7 +303,7 @@ public class PlayerController : MonoBehaviour {
 			//anim.SetBool("upThrust", true);
 			anim.SetBool("slashing", true);
 
-			SlashUp(30f);
+			//SlashUp(30f);
 
 			Vector3 position = particleSpawn.transform.position - new Vector3(2.5f, 3f, 0f);
 			ParticleSystem localSlashObj = GameObject.Instantiate(LowSlashParticle, position, LowSlashParticle.transform.rotation) as ParticleSystem;
@@ -331,9 +339,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Jump()
 	{
-		jumpTime = .6f;
-
-		if(JumpBool && Grounded)
+		if(JumpBool && (Grounded || airJump > 0))
 		{
 			if((!IsDead && Tapped))
 			{
@@ -415,6 +421,8 @@ public class PlayerController : MonoBehaviour {
 	{
 		Tapped = true;
 		JumpBool = true;
+		jumpTime = 1.2f;
+		airJump--;
 	}
 
 	public void UnJumpButton()
@@ -459,12 +467,14 @@ public class PlayerController : MonoBehaviour {
 
     	Running = true;
 			Jumping = true;
-		enemyGenerator.GameOn = true;
-		enemyGenerator.lastSpawnDistance = 0f;
-		platformGenerator.GameOn = true;
-		anim.SetFloat("speed", 1f);
-		ClearScreenBox.enabled = false;
-		CanControl = true;
+			enemyGenerator.GameOn = true;
+			enemyGenerator.lastSpawnDistance = 0f;
+			platformGenerator.GameOn = true;
+			anim.SetFloat("speed", 1f);
+			ClearScreenBox.enabled = false;
+			CanControl = true;
+
+			playerHealth.Health = playerHealth.MaxHealth;
     }
 
 		private IEnumerator DeadWait(float Time)
@@ -486,25 +496,66 @@ public class PlayerController : MonoBehaviour {
 			CanTap = true;
 		}
 
+		private IEnumerator Invincibility(float duration, float blinkTime)
+		{
+			while(duration > 0f)
+			{
+				duration -= Time.deltaTime;
+
+				//toggle renderer
+				renderer.enabled = !renderer.enabled;
+
+				yield return new WaitForSeconds(blinkTime);
+			}
+
+			renderer.enabled = true;
+			invincible = false;
+		}
+
     void OnCollisionEnter(Collision collision)
     {
 
 			//print(collision.gameObject.tag + " currentcollision");
-    	if(collision.gameObject.tag == "Enemy")
-    	{
-    		/*Running = false;
-    		anim.SetBool("dead", true);
-    		EndGamePanel.SetActive(true);
-    		CanControl = false;
-    		IsDead = true;
-    		KillCount.text = kills + " Samurai Killed";
-				*/
-				StartCoroutine(DeadWait(3f));
+			if(!invincible)
+			{
+				if(collision.gameObject.tag == "Enemy")
+	    	{
+	    		/*Running = false;
+	    		anim.SetBool("dead", true);
+	    		EndGamePanel.SetActive(true);
+	    		CanControl = false;
+	    		IsDead = true;
+	    		KillCount.text = kills + " Samurai Killed";
+					*/
+
+					playerHealth.DealDamage(1f);
+					invincible = true;
+					StartCoroutine(Invincibility(1f,0.05f));
+
+					if (playerHealth.Health <= 0f)
+					{
+						StartCoroutine(DeadWait(3f));
+					}
+			}
+
+
     	}
 
 			if(collision.gameObject.tag == "enemyWeapon")
 			{
-				StartCoroutine(DeadWait(3f));
+
+				if(!invincible)
+				{
+					playerHealth.DealDamage(1f);
+					invincible = true;
+					StartCoroutine(Invincibility(2f,0.2f));
+
+					if (playerHealth.Health <= 0f)
+					{
+						StartCoroutine(DeadWait(3f));
+					}
+				}
+
 			}
 
 		}

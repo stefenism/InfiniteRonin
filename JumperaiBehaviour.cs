@@ -17,6 +17,9 @@ public class JumperaiBehaviour : MonoBehaviour {
 
 	public float jumpDuration;
 
+	private float jumpTimer;
+	private float lastJump;
+
 	private float modifier;
 
 	private bool run;
@@ -41,6 +44,9 @@ public class JumperaiBehaviour : MonoBehaviour {
 		jump = false;
 		grounded = false;
 
+		jumpTimer = 1.5f;
+		lastJump = jumpTimer;
+
 	}
 
 	// Update is called once per frame
@@ -55,7 +61,7 @@ public class JumperaiBehaviour : MonoBehaviour {
 			StartRunning();
 		}
 
-		if(jump)
+		if(jump && (lastJump <= 0))
 		{
 			//StartCoroutine(jumping());
 			jumping = true;
@@ -82,6 +88,7 @@ public class JumperaiBehaviour : MonoBehaviour {
 				if(hit.collider.tag == "Ground")
 				{
 					grounded = true;
+					lastJump -= Time.deltaTime;
 					//player.anim.SetBool("jumping", false);
 				}
 			}
@@ -127,16 +134,15 @@ public class JumperaiBehaviour : MonoBehaviour {
 	void StartRunning()
 	{
 		rigidbody.velocity = new Vector3(-speed, rigidbody.velocity.y, 0f);
-		run = false;
 	}
 
 	void JumpAttack()
 	{
 		Debug.Log("jumping now");
-		modifier = Random.Range(-2,5);
+
 		if(jumpTime > 0)
 		{
-			rigidbody.AddForce(Vector3.up * (jumpForce + modifier), ForceMode.VelocityChange);
+			rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
 			jumpTime--;
 		}
 		else
@@ -144,6 +150,7 @@ public class JumperaiBehaviour : MonoBehaviour {
 			jumping = false;
 			jump = false;
 			jumpTime = jumpDuration;
+			lastJump = jumpTimer;
 			//rigidbody.AddForce(-Vector3.up * Physics.gravity.y);// = new Vector3(-speed, Physics.gravity.y, 0f);
 		}
 	}
