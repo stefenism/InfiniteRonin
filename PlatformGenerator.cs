@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlatformGenerator : MonoBehaviour {
 
 
 	public GameObject[] Platforms;
-	public Vector3 SpawnPoint;
+	public List<Vector3> SpawnPoint = new List<Vector3>();
+	public List<int> ListItem = new List<int>();
 	private int RandomPlatform;
 
 	private GameObject Clone;
@@ -30,6 +32,21 @@ public class PlatformGenerator : MonoBehaviour {
 	public bool bridgeSpawn;
 	public bool pitfallSpawn;
 
+	public bool platformReady = false;
+	private bool platformAllowed = true;
+
+	[HideInInspector]
+	public int dojoPos = 0;
+	[HideInInspector]
+	public int towerPos = 1;
+	[HideInInspector]
+	public int bridgePos = 2;
+	[HideInInspector]
+	public int pitfallPos = 3;
+
+	[HideInInspector]
+	public int dojoSpawns = 0;
+
 
 
 	// Use this for initialization
@@ -46,6 +63,8 @@ public class PlatformGenerator : MonoBehaviour {
 
 			dojoSpawn = false;
 
+			//Go();
+
 	}
 
 	// Update is called once per frame
@@ -57,8 +76,13 @@ public class PlatformGenerator : MonoBehaviour {
 			//print(Timer + " current platform timer");
 		//}
 
+		if(platformReady && platformAllowed)
+		{
+			Go();
+		}
 	}
 
+	/*
 	void SpawnCheck()
 	{
 
@@ -88,11 +112,30 @@ public class PlatformGenerator : MonoBehaviour {
 			}
 			Timer -= Time.deltaTime;
 		}
+		*/
 
-		void Spawn(GameObject platform)
+		public void Go()
+		{
+			platformReady = false;
+			platformAllowed = false;
+			for(int i = 0; i < (ListItem.Count -1); i++)
+			{
+				Spawn(Platforms[ListItem[i]], i);
+				Debug.Log(i + " this is the current index");
+			}
+
+			for(int i = 0; i < SpawnPoint.Count; i++)
+			{
+				Debug.Log(SpawnPoint[i]);
+			}
+
+			Debug.Log(ListItem.Count);
+		}
+
+		void Spawn(GameObject platform, int i)
 		{
 
-			Clone = Instantiate(platform, new Vector3(SpawnPoint.x, SpawnPoint.y, SpawnPoint.z), Quaternion.identity) as GameObject;
+			Clone = Instantiate(platform, new Vector3(SpawnPoint[i].x, SpawnPoint[i].y, SpawnPoint[i].z), Quaternion.identity) as GameObject;
 			Clone.transform.parent = LandGroup.transform;
 			//Destroy(Clone,10f);
 
@@ -102,6 +145,7 @@ public class PlatformGenerator : MonoBehaviour {
 
 		}
 
+		/*
 		void SpawnCombo(GameObject platform)
 		{
 
@@ -121,6 +165,7 @@ public class PlatformGenerator : MonoBehaviour {
 				//Timer = SpawnWait;
 			}
 		}
+
 
 		public void SpawnDojo()
 		{
@@ -152,6 +197,7 @@ public class PlatformGenerator : MonoBehaviour {
 			Timer = SpawnWait;
 			pitfallSpawn = false;
 		}
+		*/
 
 		private IEnumerator Waiting(float seconds)
 		{

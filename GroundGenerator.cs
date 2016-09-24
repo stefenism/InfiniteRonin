@@ -8,6 +8,7 @@ public class GroundGenerator : MonoBehaviour {
 	private float StartingX;
 	private float StartingY;
 	private float DistZ;
+	private float EndingX;
 
 	private Vector3 CurrentPoint;
 	private Vector3 NewPoint;
@@ -83,6 +84,8 @@ public class GroundGenerator : MonoBehaviour {
 	private float PatternChanging = 1000f;
 
 
+	public GameObject PlatformSpawnPoint;
+
 
 
 	// Use this for initialization
@@ -99,7 +102,7 @@ public class GroundGenerator : MonoBehaviour {
 		foreGroundGenerator = GetComponent<ForeGroundGenerator>();
 
 
-		ChangeBorders();
+		SetBorders();
 
 		//points = new Vector3[4];
 
@@ -133,7 +136,7 @@ public class GroundGenerator : MonoBehaviour {
 		borders to generate for an infinite runner, not a level GroundGenerator
 		*/
 
-		ChangeBorders();
+		//ChangeBorders();
 
 		/*
 		if(StartingX < (RightBorder.x + 20f))
@@ -150,14 +153,18 @@ public class GroundGenerator : MonoBehaviour {
 		the "x" coordinate has reached a certain distance from the starting points
 		*/
 
-		if(points[points.Count -1].x < (RightBorder.x + 100f))
+		if(points[points.Count -1].x < EndingX)
 		{
 			MeshNitialize();
+		}
+		else{
+
+			platformGenerator.platformReady = true;
 		}
 		PatternCounter();
 	}
 
-	void ChangeBorders()
+	void SetBorders()
 	{
 		DistZ = gameCamera.transform.InverseTransformPoint(transform.position).z;
 		LeftBorder = gameCamera.ViewportToWorldPoint(new Vector3(0,0,DistZ));
@@ -166,6 +173,9 @@ public class GroundGenerator : MonoBehaviour {
 
 		foreGroundGenerator.LeftBorder = LeftBorder;
 		foreGroundGenerator.RightBorder = RightBorder;
+
+		StartingX = LeftBorder.x - 50f;
+		EndingX = StartingX + 2500f;
 		//RightBorder = gameCamera.transform.InverseTransformPoint(RightBorder);
 	}
 
@@ -227,7 +237,7 @@ public class GroundGenerator : MonoBehaviour {
 
 			Marker = new Vector3(this.CurrentMeshPoint.x, this.CurrentMeshPoint.y, this.CurrentMeshPoint.z);
 			enemyGenerator.SpawnPoint = new Vector3(Marker.x -30f, Marker.y + 15f, Marker.z);
-			platformGenerator.SpawnPoint = new Vector3(Marker.x + 10f, Marker.y + 20f, Marker.z);
+			//platformGenerator.SpawnPoint.Add(new Vector3(Marker.x + 10f, Marker.y + 20f, Marker.z));
 			foreGroundGenerator.yPoint = Marker.y - 3f;
 			if(this.transform.root.name == "PhysicalGroundGenerator")
 			{
@@ -252,6 +262,8 @@ public class GroundGenerator : MonoBehaviour {
 			Vector3 p = CalculateBezierPoint(t, points[0], points[1], points[2], points[3]);
 			AddTerrainPoint(p);
 		}
+
+		Timer--;
 	}
 
 
@@ -422,11 +434,13 @@ public class GroundGenerator : MonoBehaviour {
 				points.Add(new Vector3(newPatternPoint.x, newPatternPoint.y + 100f, 0f));
 			}
 
-			platformGenerator.SpawnPoint = new Vector3(newPatternPoint.x + 12f, newPatternPoint.y - 20f, 0f);
+			platformGenerator.SpawnPoint.Add(new Vector3(newPatternPoint.x + 12f, newPatternPoint.y - 20f, 0f));
+			platformGenerator.ListItem.Add(platformGenerator.pitfallPos);
 
-			platformGenerator.pitfallSpawn = true;
-			platformGenerator.SpawnPitfall();
+			//platformGenerator.pitfallSpawn = true;
+			//platformGenerator.SpawnPitfall();
 			//points = new List <Vector3>();
+
 			Gap = false;
 			Timer = PatternChangeWait;
 
@@ -438,6 +452,7 @@ public class GroundGenerator : MonoBehaviour {
 		a purpose
 		*/
 
+		/*
 		else if(JumpRamp)
 		{
 			if(pointPatternLength < 5f)
@@ -457,20 +472,25 @@ public class GroundGenerator : MonoBehaviour {
 				foreGroundGenerator.yPoint = Marker.y - 5f;
 			}
 		}
+		*/
 		else if(Flat)
 		{
 			if(pointPatternLength < 40f)
 			{
 				newPatternPoint = new Vector3(CurrentMeshPoint.x + xWavelength * xSmoothing, CurrentMeshPoint.y, 0f);
 				pointPatternLength += 1;
-				platformGenerator.SpawnPoint = new Vector3(newPatternPoint.x + 40f, newPatternPoint.y + 20f, 0f);
+
 				Debug.Log("point pattern length " + pointPatternLength);
+
+
 				if(pointPatternLength == 1f)
 				{
-					platformGenerator.dojoSpawn = true;
-					platformGenerator.SpawnDojo();
+					platformGenerator.SpawnPoint.Add(new Vector3(newPatternPoint.x + 40f, newPatternPoint.y + 20f, 0f));
+					platformGenerator.ListItem.Add(platformGenerator.dojoPos);
+					platformGenerator.dojoSpawns += 1;
 
 				}
+
 
 			}
 			else
@@ -490,13 +510,16 @@ public class GroundGenerator : MonoBehaviour {
 				newPatternPoint = new Vector3(CurrentMeshPoint.x + xWavelength * xSmoothing, CurrentMeshPoint.y, 0f);
 
 				pointPatternLength += 1;
-				platformGenerator.SpawnPoint = new Vector3(newPatternPoint.x, newPatternPoint.y + 17f, 0f);
+
+
+
 				if(pointPatternLength == 1)
 				{
 
-					platformGenerator.towerSpawn = true;
-					platformGenerator.SpawnTower();
+					platformGenerator.SpawnPoint.Add(new Vector3(newPatternPoint.x, newPatternPoint.y + 17f, 0f));
+					platformGenerator.ListItem.Add(platformGenerator.towerPos);
 				}
+
 
 			}
 			else
@@ -518,10 +541,11 @@ public class GroundGenerator : MonoBehaviour {
 				//points.Add(new Vector3(newPatternPoint.x + flatLength, newPatternPoint.y, 0f));
 			newPatternPoint = new Vector3(newPatternPoint.x, newPatternPoint.y, 0f);
 
-			platformGenerator.SpawnPoint = new Vector3(newPatternPoint.x + 17f, newPatternPoint.y + 20f, 0f);
+			platformGenerator.SpawnPoint.Add(new Vector3(newPatternPoint.x + 17f, newPatternPoint.y + 20f, 0f));
+			platformGenerator.ListItem.Add(platformGenerator.bridgePos);
 
 			platformGenerator.bridgeSpawn = true;
-			platformGenerator.SpawnBridge();
+			//platformGenerator.SpawnBridge();
 			//points = new List <Vector3>();
 			bridgeGap = false;
 			Timer = PatternChangeWait;
@@ -541,7 +565,7 @@ public class GroundGenerator : MonoBehaviour {
 	This whole PatternCounter() function will have to be let go.  It doesn't have
 	a place in our new level generator utopia
 	*/
-	
+
 	void PatternCounter()
 	{
 
@@ -549,12 +573,8 @@ public class GroundGenerator : MonoBehaviour {
 		if(Timer <= 0f)
 		{
 			int patternProbability = Random.Range(0,100);
-			if(patternProbability >= 0 && patternProbability < 10)
-			{
-				JumpRamp = true;
-				Timer = PatternChanging;
-			}
-			else if(patternProbability >= 10 && patternProbability < 20)
+
+			if(patternProbability >= 0 && patternProbability < 20)
 			{
 				Gap = true;
 				enemyGenerator.GameOn = false;
@@ -565,12 +585,21 @@ public class GroundGenerator : MonoBehaviour {
 
 				int probs = Random.Range(0,100);
 
-				if(probs >= 0 && probs < 50)
+				if(probs >= 0 && probs < 25)
 				{
-					Flat = true;
-					Timer = PatternChanging;
+					if(platformGenerator.dojoSpawns < 1)
+					{
+						Flat = true;
+						Timer = PatternChanging;
+					}
+					else
+					{
+						towerFlat = true;
+						Timer = PatternChanging;
+					}
+
 				}
-				else if(probs >= 50 && probs < 100)
+				else if(probs >= 25 && probs < 100)
 				{
 					towerFlat = true;
 					Timer = PatternChanging;
@@ -584,12 +613,12 @@ public class GroundGenerator : MonoBehaviour {
 			}
 			else
 			{
-				JumpRamp = false;
 				Gap = false;
 				Flat = false;
 			}
+			Timer = PatternChangeWait;
 		}
-		Timer -= Time.deltaTime;
+		//Timer -= Time.deltaTime;
 	}
 
 
